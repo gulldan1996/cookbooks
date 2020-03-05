@@ -1,7 +1,6 @@
 const express = require('express');
 const config = require('config');
 const mongoose = require('mongoose');
-const path = require('path');
 
 const app = express();
 
@@ -14,10 +13,7 @@ app.use('/api/recipe', require('./routes/modify.routes'))
 app.use('/api/recipe', require('./routes/get.history.routes'))
 app.use('/api/history', require('./routes/delete.history.routes'))
 
-
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'))
-}
+app.use(express.static('client/build'))
 
 const PORT = process.env.PORT || 5000
 
