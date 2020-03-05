@@ -1,2 +1,0 @@
-Get = 'api/recipe/recipe'
-post = 'api/recipe/create'
