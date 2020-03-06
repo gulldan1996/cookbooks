@@ -1,17 +1,13 @@
 const express = require('express');
 const config = require('config');
 const mongoose = require('mongoose');
+const routes = require('./routes/routes');
 
 const app = express();
 
 app.use(express.json({ extended: true }));
 
-app.use('/api/recipe', require('./routes/create.routes'))
-app.use('/api/recipe', require('./routes/recipe.routes'))
-app.use('/api/recipe', require('./routes/delete.routes'))
-app.use('/api/recipe', require('./routes/modify.routes'))
-app.use('/api/recipe', require('./routes/get.history.routes'))
-app.use('/api/history', require('./routes/delete.history.routes'))
+app.use(routes);
 
 app.use(express.static('client/build'))
 
@@ -32,4 +28,3 @@ async function start() {
 }
 
 start();
-

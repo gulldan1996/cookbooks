@@ -45,10 +45,10 @@ const HomePage = ({
 
   useEffect(() => {
     async function fetchData() {
-      const history = await request("/api/recipe/history", "GET");
+      const history = await request("/api/history", "GET");
       loadingHistoryRecipe(history);
 
-      const response = await request("/api/recipe/recipe", "GET");
+      const response = await request("/api/recipe", "GET");
       loadingRecipe(response);
     }
     fetchData();
