@@ -15,11 +15,11 @@ app.use('/api/history', require('./routes/delete.history.routes'))
 
 app.use(express.static('client/build'))
 
-const PORT = process.env.PORT || 5000
+const PORT = process.env.MONGODB_URI || 5000;
 
 async function start() {
   try {
-    await mongoose.connect(process.env.PORT || config.get('mongoUri'), {
+    await mongoose.connect(process.env.MONGODB_URI || config.get('mongoUri'), {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
