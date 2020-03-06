@@ -1,3 +1,3 @@
 {
-  "mongoUri": "mongodb+srv://olegus:23234141qwe@cluster0-4md4r.azure.mongodb.net/cooksbook?retryWrites=true&w=majority"
+  "mongoUri": "mongodb://oleg_rudko1996:23234141qwe@ds113942.mlab.com:13942/heroku_x2rdf4bz"
 }
