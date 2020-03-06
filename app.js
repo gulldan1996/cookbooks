@@ -16,21 +16,20 @@ app.use('/api/history', require('./routes/delete.history.routes'))
 app.use(express.static('client/build'))
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`App has been started on port ${PORT}...`))
 
-// async function start() {
-//   try {
-//     await mongoose.connect(process.env.PORT || config.get('mongoUri'), {
-//       useNewUrlParser: true,
-//       useUnifiedTopology: true,
-//       useCreateIndex: true,
-//     })
-//     app.listen(PORT, () => console.log(`App has been started on port ${PORT}...`))
-//   } catch (e) {
-//     console.log('Server Error', e.message)
-//     process.exit(1)
-//   }
-// }
+async function start() {
+  try {
+    await mongoose.connect(config.get('mongoUri'), {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+    })
+    app.listen(PORT, () => console.log(`App has been started on port ${PORT}...`))
+  } catch (e) {
+    console.log('Server Error', e.message)
+    process.exit(1)
+  }
+}
 
-// start();
+start();
 
