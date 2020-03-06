@@ -51,7 +51,7 @@ const HistoryRecipe = ({ filteredHistory, reloading, reloadingRecipe }) => {
           );
         })
       ) : (
-        <Redirect to="/" />
+        <Redirect to="/previous" />
       )}
     </div>
   );
