@@ -15,7 +15,7 @@ app.use('/api/history', require('./routes/delete.history.routes'))
 
 app.use(express.static('client/build'))
 
-const PORT = process.env.MONGODB_URI || 5000;
+const PORT = process.env.MONGODB_URI || 80;
 
 async function start() {
   try {
