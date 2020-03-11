@@ -13,30 +13,45 @@ const ModifyPage = ({ formUpdate, historyInputHandler, resetInput }) => {
   const classes = useStyles();
   const { loading, request } = useHttp();
   const [redirect, setRedirect] = useState(false);
+  const [messageName, setMessageName] = useState('');
+  const [messageDesc, setMessageDesc] = useState('');
 
   const { name, description, _id } = formUpdate;
 
   const modifyRecipe = async () => {
     try {
-      console.log("modify");
-      await request(`/api/recipe/modify/${_id}`, "PUT", { ...formUpdate });
-      setRedirect(true);
-      resetInput();
+      if (name === '') {
+        setMessageName("Fill in the field with the name")
+      } else {
+        setMessageName('')
+      }
+      if (description === '') {
+        setMessageDesc("Fill in the description field")
+      } else {
+        setMessageDesc('')
+      }
+      if (name !== '' && description !== '') {
+        await request(`/api/recipe/modify/${_id}`, "PUT", { ...formUpdate });
+        setRedirect(true);
+        resetInput();
+      }
     } catch (e) {}
   };
 
-  if (redirect || name === "") {
+  if (redirect) {
     return <Redirect to="/" />;
   }
 
   return (
     <div className={classes.root}>
       <Input name="name" value={name} handler={historyInputHandler} />
+      <div className={classes.error}>{messageName}</div>
       <TextArea
         name="description"
         value={description}
         handler={historyInputHandler}
       />
+      <div className={classes.error}>{messageDesc}</div>
       <ButtonView func={modifyRecipe} loading={loading} text="Modify" />
     </div>
   );
@@ -57,6 +72,9 @@ const useStyles = makeStyles({
     flexDirection: "column",
     alignItems: "center",
     marginTop: 50
+  },
+  error: {
+    color: 'red',
   }
 });
 
