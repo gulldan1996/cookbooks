@@ -8,19 +8,19 @@ import { useRoutes } from "../routes";
 import { useStyles } from "../Components/Drawer/DrawerStyle";
 import { useHttp } from "../hooks/http.hook";
 import {
-  loadingRecipe,
+  recipeLoading,
   historyLocation,
-  loadingHistoryRecipe
+  historyRecipeLoading
 } from "../redux/actions";
 import { getRecipe, reloading, location } from '../redux/selectors';
 import { useHistory } from "react-router-dom";
 
 const HomePage = ({
-  loadingRecipe,
+  recipeLoading,
   reloading,
   historyLocation,
   location,
-  loadingHistoryRecipe
+  historyRecipeLoading
 }) => {
   const routes = useRoutes();
   let history = useHistory();
@@ -46,10 +46,10 @@ const HomePage = ({
   useEffect(() => {
     async function fetchData() {
       const history = await request("/api/history", "GET");
-      loadingHistoryRecipe(history);
+      historyRecipeLoading(history);
 
       const response = await request("/api/recipe", "GET");
-      loadingRecipe(response);
+      recipeLoading(response);
     }
     fetchData();
   }, [reloading]);
@@ -76,16 +76,16 @@ const HomePage = ({
   );
 };
 
-let mapStateToProps = state => ({
+const mapStateToProps = state => ({
   recipe: getRecipe(state),
   reloading: reloading(state),
   location: location(state),
 });
 
-let mapDispatchToProps = dispatch => ({
-  loadingRecipe: load => dispatch(loadingRecipe(load)),
+const mapDispatchToProps = dispatch => ({
+  recipeLoading: load => dispatch(recipeLoading(load)),
   historyLocation: e => dispatch(historyLocation(e)),
-  loadingHistoryRecipe: load => dispatch(loadingHistoryRecipe(load))
+  historyRecipeLoading: load => dispatch(historyRecipeLoading(load))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

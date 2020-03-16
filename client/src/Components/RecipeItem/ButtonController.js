@@ -11,7 +11,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 
-const ButtonController = ({ id, reloadingRecipe, modifyRecipe }) => {
+const ButtonController = ({ id, recipeReloading, recipeModify }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const { loading, request } = useHttp();
@@ -27,7 +27,7 @@ const ButtonController = ({ id, reloadingRecipe, modifyRecipe }) => {
   const deleteRecipe = async () => {
     try {
       await request(`/api/recipe/delete/${id}`, "DELETE");
-      reloadingRecipe();
+      recipeReloading();
     } catch (e) {}
   };
 
@@ -42,7 +42,7 @@ const ButtonController = ({ id, reloadingRecipe, modifyRecipe }) => {
             <ListItem
               component={Link}
               to={`modify/${id}`}
-              onClick={() => modifyRecipe(id)}
+              onClick={() => recipeModify(id)}
             >
               <ListItemIcon>
                 <IconButton aria-label="edit" size="small">

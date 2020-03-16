@@ -2,8 +2,8 @@ import { ACTION_TYPE } from "./actions";
 import { date } from "../constant/date";
 
 export const initialState = {
-  recipe: [],
-  historyRecipe: [],
+  recipes: [],
+  historyRecipes: [],
   form: {
     name: "",
     description: "",
@@ -24,22 +24,21 @@ export function rootReducer(state = initialState, action) {
     case ACTION_TYPE.LOAD: {
       return {
         ...state,
-        recipe: action.load,
+        recipes: action.load,
         reloading: true
       };
     }
 
-    case ACTION_TYPE.LOAD_HISTORY: {
+    case ACTION_TYPE.HISTORY_LOAD: {
       return {
         ...state,
-        historyRecipe: action.load,
+        historyRecipes: action.load,
         reloading: true
       }
     }
 
-    case ACTION_TYPE.INPUT_HANDLER: {
-      const name = action.e.target.name;
-      const value = action.e.target.value;
+    case ACTION_TYPE.HANDLER_INPUT: {
+      const { name, value } = action.e.target;
       action.e.persist();
 
       return {
@@ -64,13 +63,13 @@ export function rootReducer(state = initialState, action) {
     }
 
     case ACTION_TYPE.HISTORY_LOCATION: {
-      let loc = action.location;
+      let { location } = action;
       let result;
 
-      if (loc === "/") result = "Recipe List";
-      if (loc === "/create") result = "Create recipe";
-      if (loc === "/modify/:id") result = "";
-      if (loc === "/previous") result = "Previous version page";
+      if (location === "/") result = "Recipe List";
+      if (location === "/create") result = "Create recipe";
+      if (location === "/modify/:id") result = "";
+      if (location === "/previous") result = "Previous recipes";
 
       return {
         ...state,
@@ -86,8 +85,7 @@ export function rootReducer(state = initialState, action) {
     }
 
     case ACTION_TYPE.HISTORY_INPUT_HANDLER: {
-      const name = action.e.target.name;
-      const value = action.e.target.value;
+      const { name, value } = action.e.target;
       action.e.persist();
 
       return {
@@ -99,9 +97,9 @@ export function rootReducer(state = initialState, action) {
       }
     }
 
-    case ACTION_TYPE.MODIFY_RECIPE: {
-      const filtered = state.recipe.filter(item => item._id === action.id);
-      const { name, description, _id } = filtered[0];
+    case ACTION_TYPE.RECIPE_MODIFY: {
+      const recipeFilteredOnModify = state.recipes.filter(item => item._id === action.id);
+      const { name, description, _id } = recipeFilteredOnModify[0];
 
       return {
         ...state,
@@ -113,15 +111,14 @@ export function rootReducer(state = initialState, action) {
       };
     }
 
-    case ACTION_TYPE.HISTORY_HANDLER_ID: {
-      const filtered = state.historyRecipe
+    case ACTION_TYPE.HANDLER_HISTORY_ID: {
+      const historyRecipeFiltered = state.historyRecipes
         .filter(i => i.recipeId === action.id)
-        .sort((a,b) => a.date.localeCompare(b.date))
-        .reverse()
+        .sort((a,b) => a.date.localeCompare(!b.date))
 
       return {
         ...state,
-        filteredHistory: filtered
+        filteredHistory: historyRecipeFiltered
       }
     }
 

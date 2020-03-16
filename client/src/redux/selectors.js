@@ -4,7 +4,7 @@ const rootSelector = state => state;
 
 export const getRecipe = createSelector(
   rootSelector,
-  ({ recipe }) => recipe
+  ({ recipes }) => recipes
 );
 
 export const reloading = createSelector(

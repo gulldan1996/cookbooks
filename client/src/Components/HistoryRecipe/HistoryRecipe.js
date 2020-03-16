@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { useStyles } from "./HistoryStyle";
 import { Redirect } from "react-router-dom";
-import { reloadingRecipe } from "../../redux/actions";
+import { recipeReloading } from "../../redux/actions";
 import { useHttp } from "../../hooks/http.hook";
 import { reloading, filteredHistory } from "../../redux/selectors";
 import Card from "@material-ui/core/Card";
@@ -12,22 +12,23 @@ import Typography from "@material-ui/core/Typography";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
+import EmptyRecipe from "../EmptyRecipe";
 
-const HistoryRecipe = ({ filteredHistory, reloading, reloadingRecipe }) => {
+const HistoryRecipe = ({ filteredHistory, reloading, recipeReloading }) => {
   const classes = useStyles();
   const { loading, request } = useHttp();
 
   return (
     <div className={classes.root}>
       {filteredHistory && reloading ? (
-        filteredHistory.map(i => {
-          const { _id, name, description } = i;
-          const date = i.date.slice(0, 19).replace("T", "  ");
+        filteredHistory.map(filteredItem => {
+          const { _id, name, description } = filteredItem;
+          const date = filteredItem.date.slice(0, 19).replace("T", "  ");
 
           const deleteHistoryRecipe = async () => {
             try {
               await request(`/api/history/delete/${_id}`, "DELETE");
-              reloadingRecipe();
+              recipeReloading();
             } catch (e) {}
           };
 
@@ -53,6 +54,9 @@ const HistoryRecipe = ({ filteredHistory, reloading, reloadingRecipe }) => {
       ) : (
         <Redirect to="/previous" />
       )}
+      {filteredHistory.length === 0 ? (
+        <EmptyRecipe text="You don't have previous recipe(s)" />
+      ) : null}
     </div>
   );
 };
@@ -63,7 +67,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  reloadingRecipe: () => dispatch(reloadingRecipe())
+  recipeReloading: () => dispatch(recipeReloading())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HistoryRecipe);

@@ -10,8 +10,8 @@ const RecipeItem = ({
   description,
   name,
   rec,
-  reloadingRecipe,
-  modifyRecipe
+  recipeReloading,
+  recipeModify
 }) => {
   const classes = useStyles();
   const date = rec.date.slice(0, 10);
@@ -22,8 +22,8 @@ const RecipeItem = ({
         action={
           <ButtonController
             id={rec._id}
-            reloadingRecipe={reloadingRecipe}
-            modifyRecipe={modifyRecipe}
+            recipeReloading={recipeReloading}
+            recipeModify={recipeModify}
           />
         }
         title={name}

@@ -1,13 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
-import { reloadingRecipe, modifyRecipe } from "../redux/actions";
+import { recipeReloading, recipeModify } from "../redux/actions";
 import { getRecipe, reloading } from "../redux/selectors";
 import { makeStyles } from "@material-ui/core/styles";
 import RecipeItem from "../Components/RecipeItem/RecipeItem";
 import LoadingPage from "./LoadingPage";
 import EmptyRecipe from "../Components/EmptyRecipe";
 
-const ListPage = ({ recipe, reloading, reloadingRecipe, modifyRecipe }) => {
+const ListPage = ({ recipe, reloading, recipeReloading, recipeModify }) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -21,8 +21,8 @@ const ListPage = ({ recipe, reloading, reloadingRecipe, modifyRecipe }) => {
               name={name}
               description={description}
               rec={recipeItem}
-              reloadingRecipe={reloadingRecipe}
-              modifyRecipe={modifyRecipe}
+              recipeReloading={recipeReloading}
+              recipeModify={recipeModify}
             />
           );
         })
@@ -44,14 +44,14 @@ const useStyles = makeStyles({
   }
 });
 
-let mapStateToProps = state => ({
+const mapStateToProps = state => ({
   recipe: getRecipe(state),
   reloading: reloading(state)
 });
 
-let mapDispatchToProps = dispatch => ({
-  reloadingRecipe: () => dispatch(reloadingRecipe()),
-  modifyRecipe: id => dispatch(modifyRecipe(id))
+const mapDispatchToProps = dispatch => ({
+  recipeReloading: () => dispatch(recipeReloading()),
+  recipeModify: id => dispatch(recipeModify(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListPage);

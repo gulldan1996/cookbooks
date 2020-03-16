@@ -1,13 +1,14 @@
 let today = new Date();
-let dd = today.getDate();
+let days = today.getDate();
 
-let mm = today.getMonth() + 1;
-let yyyy = today.getFullYear();
-if (dd < 10) {
-  dd = "0" + dd;
+let month = today.getMonth() + 1;
+let year = today.getFullYear();
+
+if (days < 10) {
+  days = "0" + days;
 }
 
-if (mm < 10) {
-  mm = "0" + mm;
+if (month < 10) {
+  month = "0" + month;
 }
-export let date = today = mm + "-" + dd + "-" + yyyy;
+export let date = today = month + "-" + days + "-" + year;

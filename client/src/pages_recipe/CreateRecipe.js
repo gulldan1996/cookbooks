@@ -3,13 +3,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { useHttp } from "../hooks/http.hook";
-import { inputHandler, resetInput } from "../redux/actions";
+import { handlerInput, resetInput } from "../redux/actions";
 import { getFormState } from "../redux/selectors";
 import Input from "../Components/Input";
 import TextArea from "../Components/TextArea";
 import ButtonView from "../Components/Button/ButtonView";
 
-const CreatePage = ({ inputHandler, form, resetInput }) => {
+const CreatePage = ({ handlerInput, form, resetInput }) => {
   const classes = useStyles();
   const { loading, request } = useHttp();
   const [redirect, setRedirect] = useState(false);
@@ -19,17 +19,17 @@ const CreatePage = ({ inputHandler, form, resetInput }) => {
 
   const createHandler = async () => {
     try {
-      if (name === '') {
+      if (!name) {
         setMessageName("Fill in the field with the name")
       } else {
         setMessageName('')
       }
-      if (description === '') {
+      if (!description) {
         setMessageDesc("Fill in the description field")
       } else {
         setMessageDesc('')
       }
-      if (name !== '' && description !== '') {
+      if (name && description) {
         await request("/api/recipe/create", "POST", { ...form });
         setRedirect(true);
         resetInput();
@@ -47,11 +47,11 @@ const CreatePage = ({ inputHandler, form, resetInput }) => {
         placeholder="Name your recipe"
         name="name"
         value={name}
-        handler={inputHandler}
+        handler={handlerInput}
       />
       <div className={classes.error}>{messageName}</div>
       <TextArea
-        handler={inputHandler}
+        handler={handlerInput}
         name="description"
         value={description}
         placeholder="Write text about your recipe"
@@ -67,7 +67,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  inputHandler: e => dispatch(inputHandler(e)),
+  handlerInput: e => dispatch(handlerInput(e)),
   resetInput: () => dispatch(resetInput())
 });
 

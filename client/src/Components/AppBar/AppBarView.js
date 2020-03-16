@@ -4,7 +4,6 @@ import clsx from "clsx";
 import AppBar from "@material-ui/core/AppBar";
 import IconButton from "@material-ui/core/IconButton";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import MenuIcon from "@material-ui/icons/Menu";
 
 const AppBarView = ({
@@ -32,9 +31,9 @@ const AppBarView = ({
         >
           <MenuIcon />
         </IconButton>
-        <Typography variant="h6" noWrap>
+        <h2 className={classes.appText}>
           {location}
-        </Typography>
+        </h2>
       </Toolbar>
     </AppBar>
   );

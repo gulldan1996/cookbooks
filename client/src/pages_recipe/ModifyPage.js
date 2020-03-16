@@ -20,17 +20,17 @@ const ModifyPage = ({ formUpdate, historyInputHandler, resetInput }) => {
 
   const modifyRecipe = async () => {
     try {
-      if (name === '') {
+      if (!name) {
         setMessageName("Fill in the field with the name")
       } else {
         setMessageName('')
       }
-      if (description === '') {
+      if (!description) {
         setMessageDesc("Fill in the description field")
       } else {
         setMessageDesc('')
       }
-      if (name !== '' && description !== '') {
+      if (name && description ) {
         await request(`/api/recipe/modify/${_id}`, "PUT", { ...formUpdate });
         setRedirect(true);
         resetInput();

@@ -54,5 +54,10 @@ export const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.enteringScreen
     }),
     marginLeft: 0
-  }
+  },
+  listItemText: {
+    [theme.breakpoints.down("sm")]: {
+      display: "none"
+    }
+  },
 }));

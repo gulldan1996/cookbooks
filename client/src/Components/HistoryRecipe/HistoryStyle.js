@@ -30,8 +30,8 @@ export const useStyles = makeStyles(theme => ({
     backgroundColor: red[500],
   },
   btn: {
-    position: 'absolute',
-    top: 18,
-    right: -20,
+    display: 'flex',
+    flexDirection: 'row-reverse',
+    padding: 5
   }
 }));
