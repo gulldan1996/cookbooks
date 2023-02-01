@@ -24,7 +24,7 @@
     "express-load": "^1.1.16",
     "express-validator": "^6.4.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.2",
+    "mongoose": "^5.13.15",
     "path": "^0.12.7"
   },
   "devDependencies": {
